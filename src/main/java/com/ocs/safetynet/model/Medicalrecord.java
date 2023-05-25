@@ -1,9 +1,9 @@
-package com.example.projet5.model;
+package com.ocs.safetynet.model;
 
 import org.springframework.stereotype.Component;
 import java.util.List;
 @Component
-public class Medicalrecords {
+public class Medicalrecord {
 
     private String firstName;
     private String lastName;

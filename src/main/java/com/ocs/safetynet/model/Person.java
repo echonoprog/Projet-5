@@ -1,18 +1,32 @@
-package com.example.projet5.model;
+package com.ocs.safetynet.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jdk.jfr.DataAmount;
 import org.springframework.stereotype.Component;
 
-@Component
-public class Persons {
+@JsonIgnoreProperties(ignoreUnknown = true)
 
-    private String firstNAme;
-    private String lastName;
-    private String address;
-    private String city;
-    private String zip;
-    private String phone;
-    private String email;
+
+public class Person {
+
+    public Person(String firstNAme, String lastName, String address, String city, String zip, String phone, String email) {
+        this.firstNAme = firstNAme;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.zip = zip;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public String firstNAme;
+    public  String lastName;
+    public  String address;
+    public  String city;
+    public  String zip;
+    public  String phone;
+    public  String email;
 
 
 

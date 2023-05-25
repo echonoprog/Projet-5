@@ -1,9 +1,9 @@
-package com.example.projet5.model;
+package com.ocs.safetynet.model;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class Firestations {
+public class Firestation {
 
     private String address;
     private String station;
