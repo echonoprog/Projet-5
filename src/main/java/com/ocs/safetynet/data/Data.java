@@ -38,4 +38,13 @@ public class Data {
     public static void setMedicalrecords(List<Medicalrecord> medicalrecords) {
         Data.medicalrecords = medicalrecords;
     }
+    @Override
+    public String toString() {
+        return "Data{ " +
+                "persons=" + persons +
+                ", firestations=" + firestations +
+                ", medicalrecords=" + medicalrecords +
+                "}";
+
+    }
 }

@@ -16,6 +16,7 @@ public class ReadData {
         try {
 
             Data data = objectMapper.readValue(new File("src/main/resources/data.json"), Data.class);
+            System.out.print(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
