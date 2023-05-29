@@ -11,9 +11,9 @@ import java.util.List;
 @Component
 public class Data {
 
-    public  static List<Person> persons = new ArrayList<Person>();
-    public  static List<Firestation> firestations = new ArrayList<Firestation>();
-    public  static List<Medicalrecord> medicalrecords = new ArrayList<Medicalrecord>();
+    public  static List<Person> persons;
+    public  static List<Firestation> firestations;
+    public  static List<Medicalrecord> medicalrecords;
 
     public static List<Person> getPersons() {
         return persons;
