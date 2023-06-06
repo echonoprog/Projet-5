@@ -8,6 +8,10 @@ public class Firestation {
     private String address;
     private String station;
 
+    public Firestation(){
+
+    }
+
     public String getAddress() {
         return address;
     }
@@ -23,6 +27,7 @@ public class Firestation {
     public void setStation(String station){
         this.station=station;
     }
+
 
     @Override
     public String toString(){

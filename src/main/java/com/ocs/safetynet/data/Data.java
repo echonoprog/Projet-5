@@ -11,33 +11,34 @@ import java.util.List;
 @Component
 public class Data {
 
-    public  static List<Person> persons;
-    public  static List<Firestation> firestations;
-    public  static List<Medicalrecord> medicalrecords;
+    private static List<Person> persons;
+    private static List<Firestation> firestations;
+    private List<Medicalrecord> medicalrecords;
 
     public static List<Person> getPersons() {
         return persons;
     }
 
-    public static void setPersons(List<Person> persons) {
-        Data.persons = persons;
+    public  void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 
     public static List<Firestation> getFirestations() {
         return firestations;
     }
 
-    public static void setFirestations(List<Firestation> firestations) {
-        Data.firestations = firestations;
+    public void setFirestations(List<Firestation> firestations) {
+        this.firestations = firestations;
     }
 
-    public static List<Medicalrecord> getMedicalrecords() {
+    public List<Medicalrecord> getMedicalrecords() {
         return medicalrecords;
     }
 
-    public static void setMedicalrecords(List<Medicalrecord> medicalrecords) {
-        Data.medicalrecords = medicalrecords;
+    public void setMedicalrecords(List<Medicalrecord> medicalrecords) {
+        this.medicalrecords = medicalrecords;
     }
+
     @Override
     public String toString() {
         return "Data{ " +
@@ -47,4 +48,5 @@ public class Data {
                 "}";
 
     }
+
 }

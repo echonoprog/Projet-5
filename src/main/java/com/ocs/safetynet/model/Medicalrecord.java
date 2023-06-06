@@ -11,7 +11,9 @@ public class Medicalrecord {
     private List<String> medications;
     private List<String> allergies;
 
+    public Medicalrecord(){
 
+    }
 
     public String getFirstName (){
         return firstName;

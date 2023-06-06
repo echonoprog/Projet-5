@@ -1,16 +1,27 @@
 package com.ocs.safetynet.controller;
 
 
+import com.ocs.safetynet.model.Firestation;
+import com.ocs.safetynet.service.FirestationService;
+
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class FirestationsController {
+    private FirestationService firestationService;
 
-    @GetMapping("/firestation")
-    public void sayhello() {
+    public FirestationsController(FirestationService firestationService) {
+        this.firestationService = firestationService;
+    }
 
-        System.out.println("firestation");
+    @GetMapping("/firestations")
+    public List<Firestation> getAllFirestations() {
+
+        return firestationService.getAllFirestations();
 
     }
 }

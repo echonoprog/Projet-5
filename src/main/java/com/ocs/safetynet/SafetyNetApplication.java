@@ -5,6 +5,8 @@ import com.ocs.safetynet.data.ReadData;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import static com.ocs.safetynet.data.ReadData.*;
+
 @SpringBootApplication
 public class SafetyNetApplication {
 

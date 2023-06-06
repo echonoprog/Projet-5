@@ -8,10 +8,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class MedicalrecordsController {
 
 
-    @GetMapping("/medicalRecord")
-    public void sayhello() {
-
-        System.out.println("medicalRecord");
-
-    }
 }

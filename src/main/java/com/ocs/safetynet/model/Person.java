@@ -1,52 +1,62 @@
 package com.ocs.safetynet.model;
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jdk.jfr.DataAmount;
 import org.springframework.stereotype.Component;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Person {
 
-    public Person(String firstNAme, String lastName, String address, String city, String zip, String phone, String email) {
-        this.firstNAme = firstNAme;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.zip = zip;
-        this.phone = phone;
-        this.email = email;
+    public Person() {
+
     }
 
-    public String firstNAme;
-    public  String lastName;
-    public  String address;
-    public  String city;
-    public  String zip;
-    public  String phone;
-    public  String email;
+    /**
+     * public Person(String firstNAme, String lastName, String address, String city, String zip, String phone, String email) {
+     * this.firstNAme = firstNAme;
+     * this.lastName = lastName;
+     * this.address = address;
+     * this.city = city;
+     * this.zip = zip;
+     * this.phone = phone;
+     * this.email = email;
+     * }
+     **/
 
+    public String firstName;
+    public String lastName;
+    public String address;
+    public String city;
+    public String zip;
+    public String phone;
+    public String email;
 
-
-    public String getFirstNAme(){
-        return firstNAme;
+    public String getFirstName() {
+        return firstName;
     }
-    public void setFirstNAme(String firstNAme){
-        this.firstNAme=firstNAme;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public String getLastName(){
+
+    public String getLastName() {
         return lastName;
     }
-    public void setLastName(String lastName){
-        this.lastName=lastName;
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    public String getAddress(){
+
+    public String getAddress() {
         return address;
     }
-    public void setAddress(String address){
-        this.address=address;
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -81,11 +91,10 @@ public class Person {
         this.email = email;
     }
 
-
     @Override
-    public String toString(){
+    public String toString() {
         return "persons {" +
-                "firstName =" + firstNAme +
+                "firstName =" + firstName +
                 "lastName =" + lastName +
                 "address =" + address +
                 "city =" + city +
@@ -94,4 +103,6 @@ public class Person {
                 "email =" + email +
                 "}";
     }
+
+
 }
