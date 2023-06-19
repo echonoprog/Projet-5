@@ -3,6 +3,7 @@ package com.ocs.safetynet.controller;
 
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.PersonService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -27,13 +28,13 @@ public class PersonController {
 
 
     @PostMapping("/person")
-    public ResponseEntity<Object> addPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> addPerson(@RequestBody Person person) {
         Person addedPerson = personService.addPerson(person);
-        return ResponseEntity.ok(addedPerson);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedPerson);
     }
 
     @PutMapping("/person")
-    public ResponseEntity<Object> updatePerson(@RequestBody Person person) {
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
         Person updatedPerson = personService.updatePerson(person);
         return ResponseEntity.ok(updatedPerson);
     }

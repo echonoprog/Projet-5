@@ -18,7 +18,19 @@ public class FirestationService {
         this.firestationDAO = firestationDAO;
     }
 
+    public  Firestation addFirestation(Firestation firestation) {
+        return null;
+    }
+
+    public  Firestation updateFirestation(Firestation firestation) {
+        return null;
+    }
+
+   
     public List<Firestation> getAllFirestations() {
         return firestationDAO.getAllFirestations();
+    }
+
+    public void deleteFirestation(String address) {
     }
 }

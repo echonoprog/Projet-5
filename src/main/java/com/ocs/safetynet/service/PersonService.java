@@ -24,9 +24,7 @@ public class PersonService {
         return personDAO.getAllPersons();
     }
 
-    public Person addPerson(Person person) {
-        return person;
-    }
+    
 
 
     public Person updatePerson(Person person) {
@@ -35,5 +33,9 @@ public class PersonService {
 
     public void deletePerson(String firstName, String lastName) {
 
+    }
+
+    public Person addPerson(Person person) {
+        return null;
     }
 }
