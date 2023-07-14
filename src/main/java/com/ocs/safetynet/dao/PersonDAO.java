@@ -16,4 +16,24 @@ public class PersonDAO {
 
         return Data.getPersons();
     }
+
+    public void addPerson(Person person){
+        List<Person> personList = getAllPersons();
+
+        personList.add(person);
+
+    }
+
+    public void updatePerson(int index, Person person) {
+        List<Person> personList = getAllPersons();
+
+
+        personList.set(index,person);
+
+    }
+
+    public void deletePerson(int index) {
+        List<Person> personList = getAllPersons();
+        personList.remove(index);
+    }
 }

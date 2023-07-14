@@ -20,7 +20,7 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping("/persons")
+    @GetMapping("/person")
     public List<Person> getAllPersons() {
            return personService.getAllPersons();
 
@@ -33,13 +33,13 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPerson);
     }
 
-    @PutMapping("/person")
-    public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
-        Person updatedPerson = personService.updatePerson(person);
+    @PutMapping("/person/{firstName}&{lastName}")
+    public ResponseEntity<Person> updatePerson(@PathVariable String firstName, @PathVariable String lastName,@RequestBody Person person) {
+        Person updatedPerson = personService.updatePerson(firstName,lastName,person);
         return ResponseEntity.ok(updatedPerson);
     }
 
-    @DeleteMapping("/person/{firstName}/{lastName}")
+    @DeleteMapping("/person/{firstName}&{lastName}")
     public ResponseEntity<Void> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
         personService.deletePerson(firstName, lastName);
         return ResponseEntity.noContent().build();

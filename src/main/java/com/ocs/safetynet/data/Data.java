@@ -13,7 +13,7 @@ public class Data {
 
     private static List<Person> persons;
     private static List<Firestation> firestations;
-    private List<Medicalrecord> medicalrecords;
+    private static List<Medicalrecord> medicalrecords;
 
     public static List<Person> getPersons() {
         return persons;
@@ -31,7 +31,7 @@ public class Data {
         this.firestations = firestations;
     }
 
-    public List<Medicalrecord> getMedicalrecords() {
+    public static List<Medicalrecord> getMedicalrecords() {
         return medicalrecords;
     }
 

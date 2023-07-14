@@ -33,25 +33,27 @@ public class FirestationController {
 
     }
 
-    @PutMapping("/firestation")
-    public ResponseEntity<Firestation> updateFirestation(@RequestBody Firestation firestation) {
-        Firestation updatedFirestation = firestationService.updateFirestation(firestation);
-            if (updatedFirestation != null) {
-                return ResponseEntity.status(HttpStatus.OK).body(updatedFirestation);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+    @PutMapping("/firestation/{address}&{station}")
+    public ResponseEntity<Firestation> updateFirestation(@PathVariable String address, @PathVariable String station, @RequestBody Firestation firestation) {
+        Firestation updatedFirestation = firestationService.updateFirestation(address, station, firestation);
+        if (updatedFirestation != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedFirestation);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
-    @DeleteMapping("/firestation/{address}")
-    public ResponseEntity<Void> deleteFirestation(@PathVariable String address) {
-        firestationService.deleteFirestation(address);
+
+
+    @DeleteMapping("/firestation/{address}&{station}")
+    public ResponseEntity<Void> deleteFirestation(@PathVariable String address, @PathVariable String station) {
+        firestationService.deleteFirestation(address, station);
         return ResponseEntity.noContent().build();
-
     }
 
 
 
-    }
+
+}
 
 
 
