@@ -2,8 +2,12 @@ package com.ocs.safetynet.service;
 
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.model.Medicalrecord;
+import com.ocs.safetynet.model.Person;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -52,5 +56,27 @@ public class MedicalrecordService {
         Medicalrecord medicalrecordToUpdate = findMedicalrecord(firstName,lastName);
         int index = medicalrecordList.lastIndexOf(medicalrecordToUpdate);
         medicalrecordDAO.deleteMedicalrecord(index);
+    }
+
+    /** private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");**/
+
+    public int calculateAge(Medicalrecord medicalrecord) {
+        String birthdate = medicalrecord.getBirthdate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate birthDate = LocalDate.parse(birthdate, formatter);
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(birthDate, currentDate).getYears();
+        return age;
+    }
+
+
+    public Medicalrecord getMedicalrecordByPerson(Person person) {
+        List<Medicalrecord> medicalrecords = getAllMedicalrecords();
+        for (Medicalrecord medicalrecord : medicalrecords) {
+            if (medicalrecord.getFirstName().equals(person.getFirstName()) && medicalrecord.getLastName().equals(person.getLastName())) {
+                return medicalrecord;
+            }
+        }
+        return null;
     }
 }

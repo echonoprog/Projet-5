@@ -27,4 +27,6 @@ public class FirestationDAO {
         List<Firestation> firestationList = getAllFirestations();
         firestationList.remove(index);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.ocs.safetynet.controller;
 
 
+import com.ocs.safetynet.dto.FirestationStationNumberCountDto;
 import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.service.FirestationService;
 
@@ -50,8 +51,16 @@ public class FirestationController {
         return ResponseEntity.noContent().build();
     }
 
-
-
+    /** Endpoint pour récupérer les informations des personnes couvertes par la caserne de pompiers correspondante **/
+    @GetMapping("/firestation/{stationNumber}")
+    public ResponseEntity<FirestationStationNumberCountDto> getFirestationCoverageByStationNumber(@PathVariable  String stationNumber) {
+        FirestationStationNumberCountDto firestationCoverage = firestationService.getFirestationCoverageByStationNumber(stationNumber);
+        if (firestationCoverage != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(firestationCoverage);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
 
