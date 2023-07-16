@@ -1,15 +1,14 @@
 package com.ocs.safetynet.service;
 
 
+import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
+import com.ocs.safetynet.dto.ChildAlertDto;
 import com.ocs.safetynet.model.Medicalrecord;
-import com.ocs.safetynet.service.MedicalrecordService;
 import com.ocs.safetynet.model.Person;
-import com.ocs.safetynet.dto.PersonDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +19,15 @@ public class PersonService {
     //    @Autowired
 //    PersonDAO personDAO; /** correspond aux lignes 19-23
     private List<Person> persons;
-    private PersonDAO personDAO;
+    private final PersonDAO personDAO;
+    private final MedicalrecordDAO medicalrecordDAO;
     private MedicalrecordService medicalrecordService;
 
-    public PersonService(PersonDAO personDAO, MedicalrecordService medicalrecordService) {
+    @Autowired
+    public PersonService(PersonDAO personDAO, MedicalrecordDAO medicalrecordDAO, MedicalrecordService medicalrecordService) {
         this.personDAO = personDAO;
-        this.medicalrecordService = medicalrecordService;
+        this.medicalrecordDAO = medicalrecordDAO;
+        this.medicalrecordService = medicalrecordService; // Ajouter cette ligne
     }
 
     public List<Person> getAllPersons() {
@@ -65,6 +67,38 @@ public class PersonService {
     }
 
 
+    public List<ChildAlertDto> getChildrenAtAddress(String address) {
+        List<ChildAlertDto> childrenAtAddress = new ArrayList<>();
 
+        List<Person> persons = personDAO.getAllPersons();
+
+        for (Person person : persons) {
+            if (person.getAddress().equals(address)) {
+                Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
+                if (medicalrecord != null) {
+                    int age = medicalrecordService.calculateAge(medicalrecord);
+                    if (age <= 18) { // Vérifier si l'âge est inférieur ou égal à 18 ans
+                        ChildAlertDto child = new ChildAlertDto();
+                        child.setFirstName(person.getFirstName());
+                        child.setLastName(person.getLastName());
+                        child.setAge(age);
+
+                        // Rechercher tous les membres du foyer ayant la même adresse que l'enfant
+                        List<String> familyMembers = new ArrayList<>();
+                        for (Person familyMember : persons) {
+                            if (person.getAddress().equals(familyMember.getAddress())) {
+                                familyMembers.add(familyMember.getFirstName() + " " + familyMember.getLastName());
+                            }
+                        }
+                        child.setFamilyMembers(familyMembers);
+
+                        childrenAtAddress.add(child);
+                    }
+                }
+            }
+        }
+
+        return childrenAtAddress;
+    }
 
 }

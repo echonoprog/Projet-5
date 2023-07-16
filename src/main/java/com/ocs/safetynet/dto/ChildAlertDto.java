@@ -1,9 +1,13 @@
 package com.ocs.safetynet.dto;
 
+import java.util.List;
+
 public class ChildAlertDto {
 
     private String firstName;
     private String lastName;
+    private int age;
+    private List<String> familyMembers;
 
     public String getFirstName() {
         return firstName;
@@ -21,14 +25,19 @@ public class ChildAlertDto {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    private Integer age;
+    public List<String> getFamilyMembers() {
+        return familyMembers;
+    }
 
+    public void setFamilyMembers(List<String> familyMembers) {
+        this.familyMembers = familyMembers;
+    }
 }

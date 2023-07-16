@@ -1,6 +1,7 @@
 package com.ocs.safetynet.controller;
 
 
+import com.ocs.safetynet.dto.ChildAlertDto;
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.PersonService;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,16 @@ public class PersonController {
     public ResponseEntity<Void> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
         personService.deletePerson(firstName, lastName);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/childAlert/{address}")
+    public ResponseEntity<List<ChildAlertDto>> getChildAlert(@PathVariable String address) {
+        List<ChildAlertDto> childrenAtAddress = personService.getChildrenAtAddress(address);
+        if (childrenAtAddress.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(childrenAtAddress);
+        }
     }
 
 }
