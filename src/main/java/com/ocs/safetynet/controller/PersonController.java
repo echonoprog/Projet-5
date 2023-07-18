@@ -2,6 +2,7 @@ package com.ocs.safetynet.controller;
 
 
 import com.ocs.safetynet.dto.ChildAlertDto;
+import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.PersonService;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class PersonController {
 
     @GetMapping("/person")
     public List<Person> getAllPersons() {
-           return personService.getAllPersons();
+        return personService.getAllPersons();
 
     }
 
@@ -35,8 +36,8 @@ public class PersonController {
     }
 
     @PutMapping("/person/{firstName}&{lastName}")
-    public ResponseEntity<Person> updatePerson(@PathVariable String firstName, @PathVariable String lastName,@RequestBody Person person) {
-        Person updatedPerson = personService.updatePerson(firstName,lastName,person);
+    public ResponseEntity<Person> updatePerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Person person) {
+        Person updatedPerson = personService.updatePerson(firstName, lastName, person);
         return ResponseEntity.ok(updatedPerson);
     }
 
@@ -56,4 +57,13 @@ public class PersonController {
         }
     }
 
+    @GetMapping("/phoneAlert/{firestation}")
+    public ResponseEntity<List<String>> getPhoneNumbersByFirestation(@PathVariable("firestation") int firestationNumber) {
+        List<String> phoneNumbers = personService.getPhoneNumbersByFirestation(firestationNumber);
+        if (phoneNumbers.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(phoneNumbers);
+        }
+    }
 }

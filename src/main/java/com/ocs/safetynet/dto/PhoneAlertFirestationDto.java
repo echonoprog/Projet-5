@@ -6,6 +6,10 @@ public class PhoneAlertFirestationDto {
         this.phone = phone;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     private String phone;
 
 }

@@ -4,6 +4,9 @@ package com.ocs.safetynet.service;
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
 import com.ocs.safetynet.dto.ChildAlertDto;
+import com.ocs.safetynet.dto.FirestationStationNumberDto;
+import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
+import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.model.Medicalrecord;
 import com.ocs.safetynet.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 @Service
@@ -22,12 +27,14 @@ public class PersonService {
     private final PersonDAO personDAO;
     private final MedicalrecordDAO medicalrecordDAO;
     private MedicalrecordService medicalrecordService;
+    private final FirestationService firestationService;
 
     @Autowired
-    public PersonService(PersonDAO personDAO, MedicalrecordDAO medicalrecordDAO, MedicalrecordService medicalrecordService) {
+    public PersonService(PersonDAO personDAO, MedicalrecordDAO medicalrecordDAO, MedicalrecordService medicalrecordService, FirestationService firestationService) {
         this.personDAO = personDAO;
         this.medicalrecordDAO = medicalrecordDAO;
-        this.medicalrecordService = medicalrecordService; // Ajouter cette ligne
+        this.medicalrecordService = medicalrecordService;
+        this.firestationService = firestationService; // Ajouter cette ligne
     }
 
     public List<Person> getAllPersons() {
@@ -101,4 +108,23 @@ public class PersonService {
         return childrenAtAddress;
     }
 
+    public List<String> getPhoneNumbersByFirestation(int firestationNumber) {
+        List<String> phoneNumbers = new ArrayList<>();
+
+        List<Person> residents = personDAO.getAllPersons();
+        List<Firestation> firestations = firestationService.getAllFirestations();
+
+        for (Firestation firestation : firestations) {
+            if (firestation.getStation().equals(String.valueOf(firestationNumber))) {
+                for (Person resident : residents) {
+                    if (resident.getAddress().equals(firestation.getAddress())) {
+                        phoneNumbers.add(resident.getPhone());
+                    }
+                }
+            }
+        }
+
+        return phoneNumbers;
+
+    }
 }
