@@ -2,6 +2,7 @@ package com.ocs.safetynet.controller;
 
 
 import com.ocs.safetynet.dto.ChildAlertDto;
+import com.ocs.safetynet.dto.FireAddressDto;
 import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.PersonService;
@@ -58,12 +59,22 @@ public class PersonController {
     }
 
     @GetMapping("/phoneAlert/{firestation}")
-    public ResponseEntity<List<String>> getPhoneNumbersByFirestation(@PathVariable("firestation") int firestationNumber) {
-        List<String> phoneNumbers = personService.getPhoneNumbersByFirestation(firestationNumber);
+    public ResponseEntity<List<PhoneAlertFirestationDto>> getPhoneNumbersByFirestation(@PathVariable("firestation") int firestationNumber) {
+        List<PhoneAlertFirestationDto> phoneNumbers = personService.getPhoneNumbersByFirestation(firestationNumber);
         if (phoneNumbers.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(phoneNumbers);
+        }
+    }
+
+    @GetMapping("/fire/{address}")
+    public ResponseEntity<List<FireAddressDto>> getFireAddressDetails(@PathVariable("address") String address) {
+        List<FireAddressDto> fireAddressDetails = personService.getFireAddressDetails(address);
+        if (fireAddressDetails.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(fireAddressDetails);
         }
     }
 }

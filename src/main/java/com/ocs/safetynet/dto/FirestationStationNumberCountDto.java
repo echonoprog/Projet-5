@@ -2,7 +2,7 @@ package com.ocs.safetynet.dto;
 import java.util.List;
 public class FirestationStationNumberCountDto {
 
-    private List<FirestationStationNumberDto> persons;
+    private List<FirestationStationNumberDto> persons; /** changer nom : persons**/
     private int adultCount;
     private int childCount;
 

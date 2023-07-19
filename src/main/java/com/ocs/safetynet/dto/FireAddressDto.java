@@ -10,6 +10,16 @@ public class FireAddressDto {
     private int age;
     private List<String> medications;
     private List<String> allergies;
+    private String firestationNumber;
+    public String getFirestationNumber() {
+        return firestationNumber;
+    }
+
+    public void setFirestationNumber(String firestationNumber) {
+        this.firestationNumber = firestationNumber;
+    }
+
+
 
     public String getFirstName() {
         return firstName;

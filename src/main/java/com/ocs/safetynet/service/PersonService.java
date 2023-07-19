@@ -4,6 +4,7 @@ package com.ocs.safetynet.service;
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
 import com.ocs.safetynet.dto.ChildAlertDto;
+import com.ocs.safetynet.dto.FireAddressDto;
 import com.ocs.safetynet.dto.FirestationStationNumberDto;
 import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
 import com.ocs.safetynet.model.Firestation;
@@ -108,8 +109,8 @@ public class PersonService {
         return childrenAtAddress;
     }
 
-    public List<String> getPhoneNumbersByFirestation(int firestationNumber) {
-        List<String> phoneNumbers = new ArrayList<>();
+    public List<PhoneAlertFirestationDto> getPhoneNumbersByFirestation(int firestationNumber) {
+        List<PhoneAlertFirestationDto> phoneNumbers = new ArrayList<>();
 
         List<Person> residents = personDAO.getAllPersons();
         List<Firestation> firestations = firestationService.getAllFirestations();
@@ -118,13 +119,43 @@ public class PersonService {
             if (firestation.getStation().equals(String.valueOf(firestationNumber))) {
                 for (Person resident : residents) {
                     if (resident.getAddress().equals(firestation.getAddress())) {
-                        phoneNumbers.add(resident.getPhone());
+                        PhoneAlertFirestationDto phoneAlertDto = new PhoneAlertFirestationDto();
+                        phoneAlertDto.setPhone(resident.getPhone());
+                        phoneNumbers.add(phoneAlertDto);
                     }
                 }
             }
         }
 
         return phoneNumbers;
+    }
 
+
+    public List<FireAddressDto> getFireAddressDetails(String address) {
+        List<FireAddressDto> fireAddressDetails = new ArrayList<>();
+        List<Person> persons = personDAO.getAllPersons();
+
+        for (Person person : persons) {
+            if (person.getAddress().equals(address)) {
+                FireAddressDto fireAddressDto = new FireAddressDto();
+                fireAddressDto.setFirstName(person.getFirstName());
+                fireAddressDto.setLastName(person.getLastName());
+                fireAddressDto.setPhone(person.getPhone());
+                Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
+                int age = medicalrecordService.calculateAge(medicalrecord);
+                fireAddressDto.setAge(age);
+                fireAddressDto.setMedications(medicalrecord.getMedications());
+                fireAddressDto.setAllergies(medicalrecord.getAllergies());
+
+
+                String firestationNumber = firestationService.getFirestationNumberByAddress(address);
+                fireAddressDto.setFirestationNumber(firestationNumber);
+
+                fireAddressDetails.add(fireAddressDto);
+            }
+        }
+
+        return fireAddressDetails;
     }
 }
+

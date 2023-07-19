@@ -31,6 +31,7 @@ public class FirestationService {
         this.firestationDAO = firestationDAO;
         this.personDAO = personDAO;
         this.medicalrecordService = medicalrecordService;
+        this.firestations = firestationDAO.getAllFirestations(); //  initialiser la liste firestations
     }
 
     public List<Firestation> getAllFirestations() {
@@ -110,6 +111,16 @@ public class FirestationService {
         firestationCoverageDto.setChildCount(childCount);
 
         return firestationCoverageDto;
+    }
+
+    public String getFirestationNumberByAddress(String address) {
+        List<Firestation> firestations = firestationDAO.getAllFirestations(); // Récupérer les casernes de pompiers à partir de firestationDAO
+        for (Firestation firestation : firestations) {
+            if (firestation.getAddress().equals(address)) {
+                return firestation.getStation();
+            }
+        }
+        return null; // Retourne null si l'adresse n'est pas associée à une caserne de pompiers
     }
 }
 
