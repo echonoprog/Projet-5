@@ -122,6 +122,19 @@ public class FirestationService {
         }
         return null; // Retourne null si l'adresse n'est pas associée à une caserne de pompiers
     }
+
+    public List<String> getAddressesByFirestationNumber(int firestationNumber) {
+        List<String> addresses = new ArrayList<>();
+        List<Firestation> firestations = firestationDAO.getAllFirestations();
+
+        for (Firestation firestation : firestations) {
+            if (Integer.parseInt(firestation.getStation()) == firestationNumber) {
+                addresses.add(firestation.getAddress());
+            }
+        }
+
+        return addresses;
+    }
 }
 
 

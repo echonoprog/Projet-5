@@ -1,9 +1,7 @@
 package com.ocs.safetynet.controller;
 
 
-import com.ocs.safetynet.dto.ChildAlertDto;
-import com.ocs.safetynet.dto.FireAddressDto;
-import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
+import com.ocs.safetynet.dto.*;
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.PersonService;
 import org.springframework.http.HttpStatus;
@@ -75,6 +73,36 @@ public class PersonController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(fireAddressDetails);
+        }
+    }
+
+    @GetMapping("/flood/{stations}")
+    public ResponseEntity<List<FloodStationDto>> getFloodDetailsByStations(@PathVariable("stations") List<Integer> firestationNumbers) {
+        List<FloodStationDto> floodStationDetails = personService.getFloodDetailsByStations(firestationNumbers);
+        if (floodStationDetails.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(floodStationDetails);
+        }
+    }
+
+    @GetMapping("/personInfo/{firstName}&{lastName}")
+    public ResponseEntity<List<PersoninfoNameDto>> getPersonInfo(@PathVariable String firstName, @PathVariable String lastName) {
+        List<PersoninfoNameDto> personInfoList = personService.getPersonInfoByName(firstName, lastName);
+        if (personInfoList.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(personInfoList);
+        }
+    }
+
+    @GetMapping("/communityEmail/{city}")
+    public ResponseEntity<List<CommunityemailDto>> getEmailsByCity(@PathVariable String city) {
+        List<CommunityemailDto> emails = personService.getEmailsByCity(city);
+        if (emails.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(emails);
         }
     }
 }

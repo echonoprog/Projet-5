@@ -3,10 +3,7 @@ package com.ocs.safetynet.service;
 
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
-import com.ocs.safetynet.dto.ChildAlertDto;
-import com.ocs.safetynet.dto.FireAddressDto;
-import com.ocs.safetynet.dto.FirestationStationNumberDto;
-import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
+import com.ocs.safetynet.dto.*;
 import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.model.Medicalrecord;
 import com.ocs.safetynet.model.Person;
@@ -35,7 +32,7 @@ public class PersonService {
         this.personDAO = personDAO;
         this.medicalrecordDAO = medicalrecordDAO;
         this.medicalrecordService = medicalrecordService;
-        this.firestationService = firestationService; // Ajouter cette ligne
+        this.firestationService = firestationService;
     }
 
     public List<Person> getAllPersons() {
@@ -156,6 +153,74 @@ public class PersonService {
         }
 
         return fireAddressDetails;
+    }
+
+    public List<FloodStationDto> getFloodDetailsByStations(List<Integer> firestationNumbers) {
+        List<FloodStationDto> floodStationDetails = new ArrayList<>();
+        List<Person> persons = personDAO.getAllPersons();
+
+        for (Integer firestationNumber : firestationNumbers) {
+            List<String> addresses = firestationService.getAddressesByFirestationNumber(firestationNumber);
+            for (String address : addresses) {
+                for (Person person : persons) {
+                    if (person.getAddress().equals(address)) {
+                        Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
+                        int age = medicalrecordService.calculateAge(medicalrecord);
+
+                        FloodStationDto floodStationDto = new FloodStationDto();
+                        floodStationDto.setLastName(person.getLastName());
+                        floodStationDto.setPhone(person.getPhone());
+                        floodStationDto.setAge(age);
+                        floodStationDto.setMedications(medicalrecord.getMedications());
+                        floodStationDto.setAllergies(medicalrecord.getAllergies());
+
+                        floodStationDetails.add(floodStationDto);
+                    }
+                }
+            }
+        }
+
+        return floodStationDetails;
+    }
+
+    public List<PersoninfoNameDto> getPersonInfoByName(String firstName, String lastName) {
+        List<PersoninfoNameDto> personInfoList = new ArrayList<>();
+        List<Person> persons = getAllPersons();
+
+        for (Person person : persons) {
+            if (person.getLastName().equals(lastName)) {
+                PersoninfoNameDto personInfo = new PersoninfoNameDto();
+                personInfo.setFirstName(person.getFirstName());
+                personInfo.setLastName(person.getLastName());
+                personInfo.setAddress(person.getAddress());
+                personInfo.setEmail(person.getEmail());
+
+                Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
+                int age = medicalrecordService.calculateAge(medicalrecord);
+                personInfo.setAge(age);
+                personInfo.setMedications(medicalrecord.getMedications());
+                personInfo.setAllergies(medicalrecord.getAllergies());
+
+                personInfoList.add(personInfo);
+            }
+        }
+
+        return personInfoList;
+    }
+
+    public List<CommunityemailDto> getEmailsByCity(String city) {
+        List<CommunityemailDto> emails = new ArrayList<>();
+        List<Person> persons = getAllPersons();
+
+        for (Person person : persons) {
+            if (person.getCity().equals(city)) {
+                CommunityemailDto emailDto = new CommunityemailDto();
+                emailDto.setEmail(person.getEmail());
+                emails.add(emailDto);
+            }
+        }
+
+        return emails;
     }
 }
 
