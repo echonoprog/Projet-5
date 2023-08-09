@@ -35,5 +35,6 @@ public class PersonDAO {
     public void deletePerson(int index) {
         List<Person> personList = getAllPersons();
         personList.remove(index);
-    }
+        }
+
 }

@@ -33,13 +33,21 @@ public class MedicalrecordService {
 
     }
 
-    public Medicalrecord updateMedicalrecord(String firstName, String lastName, Medicalrecord medicalRecord) {
-        List <Medicalrecord> medicalrecordList=getAllMedicalrecords();
-        Medicalrecord medicalrecordToUpdate = findMedicalrecord(firstName,lastName);
-        int index = medicalrecordList.lastIndexOf(medicalrecordToUpdate);
-        medicalrecordDAO.updateMedicalrecord(index,medicalRecord);
-        return medicalRecord;
-    }
+
+  public Medicalrecord updateMedicalrecord(String firstName, String lastName, Medicalrecord medicalRecord) {
+      List<Medicalrecord> medicalrecordList = getAllMedicalrecords();
+      Medicalrecord medicalrecordToUpdate = findMedicalrecord(firstName, lastName);
+
+      if (medicalrecordToUpdate != null) {
+          int index = medicalrecordList.indexOf(medicalrecordToUpdate);
+          if (index != -1) {
+              medicalrecordDAO.updateMedicalrecord(index, medicalRecord);
+              return medicalRecord;
+          }
+      }
+
+      return null;
+  }
 
     private Medicalrecord findMedicalrecord(String firstName, String lastName) {
         List<Medicalrecord> medicalrecordList = getAllMedicalrecords();
@@ -58,7 +66,6 @@ public class MedicalrecordService {
         medicalrecordDAO.deleteMedicalrecord(index);
     }
 
-    /** private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy");**/
 
     public int calculateAge(Medicalrecord medicalrecord) {
         String birthdate = medicalrecord.getBirthdate();

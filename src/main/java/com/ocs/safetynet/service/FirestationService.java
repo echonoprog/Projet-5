@@ -1,18 +1,16 @@
 package com.ocs.safetynet.service;
 
 import com.ocs.safetynet.dao.FirestationDAO;
+import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
 import com.ocs.safetynet.dto.FirestationStationNumberCountDto;
 import com.ocs.safetynet.dto.FirestationStationNumberDto;
-import com.ocs.safetynet.dto.PersonDto;
 import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.model.Medicalrecord;
 import com.ocs.safetynet.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +60,7 @@ public class FirestationService {
         }
     }
 
-    private Firestation findFirestation(String address, String station) {
+    public Firestation findFirestation(String address, String station) {
         List<Firestation> firestationList = getAllFirestations();
         for (Firestation firestation : firestationList) {
             if (firestation.getAddress().equals(address) && firestation.getStation().equals(station)) {

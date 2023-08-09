@@ -38,11 +38,16 @@ public class MedicalrecordController {
     }
 
     @PutMapping("/medicalRecord/{firstName}&{lastName}")
-    public ResponseEntity<Medicalrecord> updateMedicalrecord(@PathVariable String firstName, @PathVariable String lastName,@RequestBody Medicalrecord medicalrecord) {
+    public ResponseEntity<Medicalrecord> updateMedicalrecord(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Medicalrecord medicalrecord) {
         logger.info("Update Medicalrecords");
-        Medicalrecord updatedMedicalrecord = medicalrecordService.updateMedicalrecord(firstName, lastName,medicalrecord);
-        return ResponseEntity.ok(updatedMedicalrecord);
+        Medicalrecord updatedMedicalrecord = medicalrecordService.updateMedicalrecord(firstName, lastName, medicalrecord);
+        if (updatedMedicalrecord != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedMedicalrecord);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+
 
     @DeleteMapping("/medicalRecord/{firstName}&{lastName}")
     public ResponseEntity<Void> deleteMedicalrecord(@PathVariable String firstName, @PathVariable String lastName) {

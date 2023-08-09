@@ -8,24 +8,26 @@ import org.springframework.stereotype.Component;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Person {
 
     public Person() {
 
     }
 
-    /**
-     * public Person(String firstNAme, String lastName, String address, String city, String zip, String phone, String email) {
-     * this.firstNAme = firstNAme;
-     * this.lastName = lastName;
-     * this.address = address;
-     * this.city = city;
-     * this.zip = zip;
-     * this.phone = phone;
-     * this.email = email;
-     * }
-     **/
+    public Person(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.zip = zip;
+        this.phone = phone;
+        this.email = email;
+    }
+
 
     public String firstName;
     public String lastName;

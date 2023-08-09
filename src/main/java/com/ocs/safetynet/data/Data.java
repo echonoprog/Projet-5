@@ -11,16 +11,16 @@ import java.util.List;
 @Component
 public class Data {
 
-    private static List<Person> persons;
-    private static List<Firestation> firestations;
-    private static List<Medicalrecord> medicalrecords;
+    private static List<Person> persons = new ArrayList<Person>();
+    private static List<Firestation> firestations =  new ArrayList<Firestation>();
+    private static List<Medicalrecord> medicalrecords = new ArrayList<Medicalrecord>();
 
     public static List<Person> getPersons() {
         return persons;
     }
 
-    public  void setPersons(List<Person> persons) {
-        this.persons = persons;
+    public void setPersons(List<Person> persons) {
+        Data.persons = persons;
     }
 
     public static List<Firestation> getFirestations() {
@@ -28,7 +28,7 @@ public class Data {
     }
 
     public void setFirestations(List<Firestation> firestations) {
-        this.firestations = firestations;
+        Data.firestations = firestations;
     }
 
     public static List<Medicalrecord> getMedicalrecords() {
@@ -36,7 +36,7 @@ public class Data {
     }
 
     public void setMedicalrecords(List<Medicalrecord> medicalrecords) {
-        this.medicalrecords = medicalrecords;
+        Data.medicalrecords = medicalrecords;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.service.FirestationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 public class FirestationController {
     private final Logger logger = LoggerFactory.getLogger(FirestationController.class);
+
 
     private FirestationService firestationService;
 
