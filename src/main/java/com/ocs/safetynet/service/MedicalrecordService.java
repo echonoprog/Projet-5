@@ -69,12 +69,14 @@ public class MedicalrecordService {
 
     public int calculateAge(Medicalrecord medicalrecord) {
         String birthdate = medicalrecord.getBirthdate();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate birthDate = LocalDate.parse(birthdate, formatter);
         LocalDate currentDate = LocalDate.now();
         int age = Period.between(birthDate, currentDate).getYears();
         return age;
     }
+
 
 
     public Medicalrecord getMedicalrecordByPerson(Person person) {

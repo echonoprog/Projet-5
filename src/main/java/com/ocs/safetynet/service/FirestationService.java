@@ -29,7 +29,7 @@ public class FirestationService {
         this.firestationDAO = firestationDAO;
         this.personDAO = personDAO;
         this.medicalrecordService = medicalrecordService;
-        this.firestations = firestationDAO.getAllFirestations(); //  initialiser la liste firestations
+        this.firestations = firestationDAO.getAllFirestations();
     }
 
     public List<Firestation> getAllFirestations() {

@@ -1,6 +1,5 @@
 package com.ocs.safetynet.service;
 
-
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
 import com.ocs.safetynet.dto.*;
@@ -13,14 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 @Service
 public class PersonService {
 
-    //    @Autowired
-//    PersonDAO personDAO; /** correspond aux lignes 19-23
     private List<Person> persons;
     private final PersonDAO personDAO;
     private final MedicalrecordDAO medicalrecordDAO;
