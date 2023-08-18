@@ -1,6 +1,6 @@
 package com.ocs.safetynet.ServiceTest;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -15,9 +15,12 @@ import com.ocs.safetynet.model.Medicalrecord;
 import com.ocs.safetynet.model.Person;
 import com.ocs.safetynet.service.FirestationService;
 import com.ocs.safetynet.service.MedicalrecordService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class FirestationServiceTest {
 
     private FirestationService firestationService;
@@ -27,8 +30,10 @@ public class FirestationServiceTest {
 
     private MedicalrecordDAO medicalrecordDAO;
 
-    @Before
+    @BeforeEach
     public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
         firestationDAO = mock(FirestationDAO.class);
         personDAO = mock(PersonDAO.class);
         medicalrecordService = mock(MedicalrecordService.class);
@@ -126,7 +131,7 @@ public class FirestationServiceTest {
         when(personDAO.getAllPersons()).thenReturn(persons);
         when(firestationDAO.getAllFirestations()).thenReturn(firestations);
 
-        when(medicalrecordService.getMedicalrecordByPerson(any())).thenReturn(new Medicalrecord());
+        //when(medicalrecordService.getMedicalrecordByPerson(any())).thenReturn(new Medicalrecord());
         when(medicalrecordService.calculateAge(any())).thenReturn(25);
 
         FirestationStationNumberCountDto result = firestationService.getFirestationCoverageByStationNumber("3");
@@ -163,6 +168,8 @@ public class FirestationServiceTest {
         assertTrue(result.contains("1509 Culver St"));
         assertTrue(result.contains("29 15th St"));
     }
+
+
 
 
 }

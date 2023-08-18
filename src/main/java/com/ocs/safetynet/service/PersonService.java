@@ -71,11 +71,17 @@ public class PersonService {
 
         List<Person> persons = personDAO.getAllPersons();
 
+        System.out.println("Total persons in database: " + persons.size());
+
         for (Person person : persons) {
+            System.out.println("Checking person: " + person.getFirstName() + " " + person.getLastName());
+
             if (person.getAddress().equals(address)) {
                 Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
-                if (medicalrecord != null) {
+
                     int age = medicalrecordService.calculateAge(medicalrecord);
+
+
                     if (age <= 18) { // Vérifier si l'âge est inférieur ou égal à 18 ans
                         ChildAlertDto child = new ChildAlertDto();
                         child.setFirstName(person.getFirstName());
@@ -93,7 +99,7 @@ public class PersonService {
 
                         childrenAtAddress.add(child);
                     }
-                }
+
             }
         }
 
@@ -106,10 +112,22 @@ public class PersonService {
         List<Person> residents = personDAO.getAllPersons();
         List<Firestation> firestations = firestationService.getAllFirestations();
 
+        System.out.println("Total residents: " + residents.size());
+        System.out.println("Total firestations: " + firestations.size());
+
         for (Firestation firestation : firestations) {
+            System.out.println("Matching firestation found: " + firestation.getStation());
             if (firestation.getStation().equals(String.valueOf(firestationNumber))) {
+                System.out.println("Firestation number matches: " + firestationNumber);
+
                 for (Person resident : residents) {
-                    if (resident.getAddress().equals(firestation.getAddress())) {
+                    System.out.println("Resident address: " + resident.getAddress());
+                    System.out.println("Firestation address: " + firestation.getAddress());
+                    if (resident.getAddress() != null && resident.getAddress().equals(firestation.getAddress())) {
+                        System.out.println("Resident matched: " + resident.getFirstName() + " " + resident.getLastName());
+                        System.out.println("Resident Address: " + resident.getAddress());
+                        System.out.println("Firestation Address: " + firestation.getAddress());
+
                         PhoneAlertFirestationDto phoneAlertDto = new PhoneAlertFirestationDto();
                         phoneAlertDto.setPhone(resident.getPhone());
                         phoneNumbers.add(phoneAlertDto);
@@ -128,18 +146,28 @@ public class PersonService {
 
         for (Person person : persons) {
             if (person.getAddress().equals(address)) {
+                System.out.println("Processing person: " + person.getFirstName() + " " + person.getLastName());
+
                 FireAddressDto fireAddressDto = new FireAddressDto();
                 fireAddressDto.setFirstName(person.getFirstName());
                 fireAddressDto.setLastName(person.getLastName());
                 fireAddressDto.setPhone(person.getPhone());
+
                 Medicalrecord medicalrecord = medicalrecordService.getMedicalrecordByPerson(person);
-                int age = medicalrecordService.calculateAge(medicalrecord);
-                fireAddressDto.setAge(age);
-                fireAddressDto.setMedications(medicalrecord.getMedications());
-                fireAddressDto.setAllergies(medicalrecord.getAllergies());
+
+                    System.out.println("Medicalrecord found for: " + person.getFirstName() + " " + person.getLastName());
+
+                    int age = medicalrecordService.calculateAge(medicalrecord);
+                    System.out.println("Calculated age: " + age);
+
+                    fireAddressDto.setAge(age);
+                    fireAddressDto.setMedications(medicalrecord.getMedications());
+                    fireAddressDto.setAllergies(medicalrecord.getAllergies());
 
 
                 String firestationNumber = firestationService.getFirestationNumberByAddress(address);
+                System.out.println("Firestation number: " + firestationNumber);
+
                 fireAddressDto.setFirestationNumber(firestationNumber);
 
                 fireAddressDetails.add(fireAddressDto);
@@ -148,6 +176,7 @@ public class PersonService {
 
         return fireAddressDetails;
     }
+
 
     public List<FloodStationDto> getFloodDetailsByStations(List<Integer> firestationNumbers) {
         List<FloodStationDto> floodStationDetails = new ArrayList<>();

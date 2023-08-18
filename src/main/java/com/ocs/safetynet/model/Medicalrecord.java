@@ -1,7 +1,9 @@
 package com.ocs.safetynet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Component;
 import java.util.List;
+
 @Component
 public class Medicalrecord {
 
