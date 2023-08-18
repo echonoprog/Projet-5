@@ -4,9 +4,7 @@ import com.ocs.safetynet.dao.FirestationDAO;
 import com.ocs.safetynet.dao.MedicalrecordDAO;
 import com.ocs.safetynet.dao.PersonDAO;
 import com.ocs.safetynet.data.Data;
-import com.ocs.safetynet.dto.ChildAlertDto;
-import com.ocs.safetynet.dto.FireAddressDto;
-import com.ocs.safetynet.dto.PhoneAlertFirestationDto;
+import com.ocs.safetynet.dto.*;
 import com.ocs.safetynet.model.Firestation;
 import com.ocs.safetynet.model.Medicalrecord;
 import com.ocs.safetynet.model.Person;
@@ -55,7 +53,6 @@ public class PersonServiceTest {
     private FirestationDAO firestationDAO;
 
 
-
     @Test
     void testGetAllPersons() {
         List<Person> personnes = new ArrayList<>();
@@ -69,23 +66,24 @@ public class PersonServiceTest {
         assertEquals(2, resultat.size());
     }
 
-   @Test
-   void testUpdatePerson() {
+    @Test
+    void testUpdatePerson() {
 
-       String firstName = "John";
-       String lastName = "Boyd";
+        String firstName = "John";
+        String lastName = "Boyd";
 
 
-       Person updatedPerson = new Person();
-       updatedPerson.setFirstName(firstName);
-       updatedPerson.setLastName(lastName);
+        Person updatedPerson = new Person();
+        updatedPerson.setFirstName(firstName);
+        updatedPerson.setLastName(lastName);
 
-       Person result = personService.updatePerson(firstName, lastName, updatedPerson);
+        Person result = personService.updatePerson(firstName, lastName, updatedPerson);
 
-       assertNotNull(result);
-       assertEquals(firstName, result.getFirstName());
-       assertEquals(lastName, result.getLastName());
-   }
+        assertNotNull(result);
+        assertEquals(firstName, result.getFirstName());
+        assertEquals(lastName, result.getLastName());
+    }
+
     @Test
     public void testDeletePerson() {
         String firstName = "John";
@@ -213,4 +211,83 @@ public class PersonServiceTest {
         assertEquals(1, result.size());
     }
 
+    @Test
+    public void testGetFloodDetailsByStations() {
+
+        List<Integer> firestationNumbers = new ArrayList<>();
+        firestationNumbers.add(3);
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com"));
+
+        List<String> addresses = new ArrayList<>();
+        addresses.add("1509 Culver St");
+
+        Medicalrecord medicalrecord = new Medicalrecord();
+        when(medicalrecordService.getMedicalrecordByPerson(any())).thenReturn(medicalrecord);
+        when(medicalrecordService.calculateAge(medicalrecord)).thenReturn(30);
+
+        when(personDAO.getAllPersons()).thenReturn(persons);
+        when(firestationService.getAddressesByFirestationNumber(3)).thenReturn(addresses);
+
+
+        List<FloodStationDto> result = personService.getFloodDetailsByStations(firestationNumbers);
+
+
+        assertEquals(1, result.size());
+        FloodStationDto floodStationDto = result.get(0);
+        assertEquals("Boyd", floodStationDto.getLastName());
+        assertEquals("841-874-6512", floodStationDto.getPhone());
+        assertEquals(30, floodStationDto.getAge());
+
+    }
+
+    @Test
+    public void testGetPersonInfoByName() {
+
+        String firstName = "John";
+        String lastName = "Boyd";
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person(firstName, lastName, "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com"));
+
+
+        Medicalrecord medicalrecord = new Medicalrecord();
+        when(medicalrecordService.getMedicalrecordByPerson(any())).thenReturn(medicalrecord);
+        when(medicalrecordService.calculateAge(medicalrecord)).thenReturn(30);
+
+        when(personDAO.getAllPersons()).thenReturn(persons);
+
+        List<PersoninfoNameDto> result = personService.getPersonInfoByName(firstName, lastName);
+
+
+        assertEquals(1, result.size());
+        PersoninfoNameDto personInfoDto = result.get(0);
+        assertEquals(firstName, personInfoDto.getFirstName());
+        assertEquals(lastName, personInfoDto.getLastName());
+        assertEquals("1509 Culver St", personInfoDto.getAddress());
+        assertEquals("jaboyd@email.com", personInfoDto.getEmail());
+        assertEquals(30, personInfoDto.getAge());
+    }
+
+    @Test
+    public void testGetEmailsByCity() {
+
+        String city = "Culver";
+
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person("John", "Boyd", "1509 Culver St", city, "97451", "841-874-6512", "jaboyd@email.com"));
+
+
+        when(personDAO.getAllPersons()).thenReturn(persons);
+
+
+        List<CommunityemailDto> result = personService.getEmailsByCity(city);
+
+
+        assertEquals(1, result.size());
+        CommunityemailDto emailDto = result.get(0);
+        assertEquals("jaboyd@email.com", emailDto.getEmail());
+
+    }
 }
