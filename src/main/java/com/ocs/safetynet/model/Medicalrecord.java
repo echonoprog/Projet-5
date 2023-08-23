@@ -1,9 +1,11 @@
-package com.example.projet5.model;
+package com.ocs.safetynet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Component;
 import java.util.List;
+
 @Component
-public class Medicalrecords {
+public class Medicalrecord {
 
     private String firstName;
     private String lastName;
@@ -11,7 +13,20 @@ public class Medicalrecords {
     private List<String> medications;
     private List<String> allergies;
 
+    public Medicalrecord(){
 
+    }
+    public Medicalrecord(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    public Medicalrecord(String firstName, String lastName, String birthdate, List<String> medications, List<String> allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.medications = medications;
+        this.allergies = allergies;
+    }
 
     public String getFirstName (){
         return firstName;

@@ -1,12 +1,21 @@
-package com.example.projet5.model;
+package com.ocs.safetynet.model;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class Firestations {
+public class Firestation {
 
     private String address;
     private String station;
+
+    public Firestation(){
+
+    }
+
+    public Firestation(String address, String station) {
+        this.address = address;
+        this.station = station;
+    }
 
     public String getAddress() {
         return address;
@@ -23,6 +32,7 @@ public class Firestations {
     public void setStation(String station){
         this.station=station;
     }
+
 
     @Override
     public String toString(){
