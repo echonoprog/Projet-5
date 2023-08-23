@@ -124,7 +124,7 @@ public class PersonService {
                     System.out.println("Resident address: " + resident.getAddress());
                     System.out.println("Firestation address: " + firestation.getAddress());
                     if (resident.getAddress() != null && resident.getAddress().equals(firestation.getAddress())) {
-                        System.out.println("Resident matched: " + resident.getFirstName() + " " + resident.getLastName());
+
                         System.out.println("Resident Address: " + resident.getAddress());
                         System.out.println("Firestation Address: " + firestation.getAddress());
 
